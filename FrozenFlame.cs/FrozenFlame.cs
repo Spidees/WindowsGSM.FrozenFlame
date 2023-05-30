@@ -48,7 +48,7 @@ namespace WindowsGSM.Plugins
         public string QueryPort = "7877"; // Default query port
         public string Defaultmap = "Survive.Survive"; // Default map name
         public string Maxplayers = "25"; // Default maxplayers
-        public string Additional = "-MetaGameServerName="SERVERNAME" -RconPort=rconPort -RconPassword=rconPassword"; // Additional server start parameter
+        public string Additional = "-MetaGameServerName=\"SERVERNAME\" -RconPort=rconPort -RconPassword=rconPassword"; // Additional server start parameter
 
 
         // - Create a default cfg for the game server after installation
