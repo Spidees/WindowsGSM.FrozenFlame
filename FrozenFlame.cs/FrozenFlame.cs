@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using WindowsGSM.Functions;
@@ -46,21 +46,26 @@ namespace WindowsGSM.Plugins
         // - Game server default values
         public string Port = "7876"; // Default port
         public string QueryPort = "7877"; // Default query port
-        public string Defaultmap = "world1"; // Default map name
-        public string Maxplayers = ""; // Default maxplayers
-        public string Additional = ""; // Additional server start parameter
+        public string Defaultmap = "Survive.Survive"; // Default map name
+        public string Maxplayers = "25"; // Default maxplayers
+        public string Additional = "-MetaGameServerName=SERVERNAME -RconPort=rconPort -RconPassword=rconPassword"; // Additional server start parameter
 
 
         // - Create a default cfg for the game server after installation
         public async void CreateServerCFG()
         {
-            //No config file seems
+            //Use setting in serverfiles\FrozenFlame\Saved\Config\WindowsServer
         }
 
         // - Start server function, return its Process to WindowsGSM
         public async Task<Process> Start()
         {
-			
+
+			//Get WAN IP from net
+            string externalIpString = new WebClient().DownloadString("http://icanhazip.com").Replace("\\r\\n", "").Replace("\\n", "").Trim();
+            var externalIp = IPAddress.Parse(externalIpString);
+
+
             string shipExePath = Functions.ServerPath.GetServersServerFiles(_serverData.ServerID, StartPath);
             if (!File.Exists(shipExePath))
             {
@@ -72,8 +77,11 @@ namespace WindowsGSM.Plugins
 
             // Prepare start parameter
 
-			string param = $"-batchmode -nographics {_serverData.ServerParam}" + (!AllowsEmbedConsole ? " -log" : string.Empty);	
-	
+			string param = $"-log -LOCALLOGTIMES";
+			param += string.IsNullOrWhiteSpace(_serverData.ServerIP) ? string.Empty : $" -ip={externalIp.ToString()}";
+			param += string.IsNullOrWhiteSpace(_serverData.ServerPort) ? string.Empty : $" -Port={_serverData.ServerPort}"; 
+			param += string.IsNullOrWhiteSpace(_serverData.ServerQueryPort) ? string.Empty : $" -queryPort={_serverData.ServerQueryPort}";
+            param += string.IsNullOrWhiteSpace(_serverData.ServerParam) ? string.Empty : $" {_serverData.ServerParam}"; 	
 
 
             // Prepare Process
