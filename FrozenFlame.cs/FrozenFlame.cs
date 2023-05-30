@@ -21,7 +21,7 @@ namespace WindowsGSM.Plugins
             author = "Spidees",
             description = "WindowsGSM plugin for supporting FrozenFlame Dedicated Server",
             version = "1.0",
-            url = "https://github.com/spidees/WindowsGSM.FrozenFlame", // Github repository link (Best practice)
+            url = "https://github.com/spidees/WindowsGSM.FrozenFlame", // Github repository link
             color = "#34c9eb" // Color Hex
         };
 
@@ -40,7 +40,7 @@ namespace WindowsGSM.Plugins
         public string FullName = "FrozenFlame Dedicated Server"; // Game server FullName
         public bool AllowsEmbedConsole = false;  // Does this server support output redirect?
         public int PortIncrements = 10; // This tells WindowsGSM how many ports should skip after installation
-        public object QueryMethod = new A2S(); // Query method should be use on current server type. Accepted value: null or new A2S() or new FIVEM() or new UT3()
+        public object QueryMethod = null; // Query method should be use on current server type. Accepted value: null or new A2S() or new FIVEM() or new UT3()
 
 
         // - Game server default values
